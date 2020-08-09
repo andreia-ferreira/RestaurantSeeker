@@ -54,19 +54,25 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
 
     private fun sortRestaurantList(unsortedList: List<Restaurant>, selectedSort: SortRestaurantEnum): List<Restaurant> {
         val sortedList = unsortedList.toMutableList()
+        val favoritesComparator = compareBy<Restaurant> { !it.isFavorite }
+        val statusComparator = compareBy<Restaurant> { it.status?.priority }
 
-        when (selectedSort) {
-            SortRestaurantEnum.BEST_MATCH -> sortedList.sortByDescending { it.sortingValues?.bestMatch }
-            SortRestaurantEnum.NEWEST -> sortedList.sortByDescending { it.sortingValues?.newest }
-            SortRestaurantEnum.RATING -> sortedList.sortByDescending { it.sortingValues?.ratingAverage }
-            SortRestaurantEnum.DISTANCE -> sortedList.sortBy { it.sortingValues?.distance }
-            SortRestaurantEnum.POPULARITY -> sortedList.sortByDescending { it.sortingValues?.popularity }
-            SortRestaurantEnum.AVERAGE_PRICE -> sortedList.sortBy { it.sortingValues?.averageProductPrice }
-            SortRestaurantEnum.DELIVERY_COST -> sortedList.sortBy { it.sortingValues?.deliveryCosts }
-            SortRestaurantEnum.MINIMUM_COST -> sortedList.sortBy { it.sortingValues?.minCost }
+        val sortingComparator = compareBy<Restaurant> {
+            when (selectedSort) {
+                SortRestaurantEnum.BEST_MATCH -> it.sortingValues?.bestMatch
+                SortRestaurantEnum.NEWEST ->  it.sortingValues?.newest
+                SortRestaurantEnum.RATING ->  it.sortingValues?.ratingAverage
+                SortRestaurantEnum.DISTANCE -> it.sortingValues?.distance
+                SortRestaurantEnum.POPULARITY -> it.sortingValues?.popularity
+                SortRestaurantEnum.AVERAGE_PRICE -> it.sortingValues?.averageProductPrice
+                SortRestaurantEnum.DELIVERY_COST -> it.sortingValues?.deliveryCosts
+                SortRestaurantEnum.MINIMUM_COST -> it.sortingValues?.minCost
+            }
         }
 
-        sortedList.sortWith(compareBy<Restaurant> { !it.isFavorite }.thenBy { it.status?.priority })
+        sortedList.sortWith(favoritesComparator
+            .thenDescending(sortingComparator)
+            .then(statusComparator))
 
         return sortedList
     }
