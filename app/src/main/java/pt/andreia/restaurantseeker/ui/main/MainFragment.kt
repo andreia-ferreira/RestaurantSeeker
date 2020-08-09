@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -54,14 +55,32 @@ class MainFragment : Fragment() {
 
         viewModel.selectedSort.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                adapter.sortEnum = it
-                adapter.notifyDataSetChanged()
+                adapter.updateSortEnum(it)
             }
         })
     }
 
     private fun initListeners() {
         adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
+
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.updateFilter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.updateFilter(newText)
+                return true
+            }
+
+        })
+
+        binding.searchView.setOnCloseListener {
+            viewModel.updateFilter("")
+            true
+        }
+
     }
 
     private fun onClickFavorite(position: Int?) {

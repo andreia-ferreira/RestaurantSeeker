@@ -14,9 +14,9 @@ import pt.andreia.restaurantseeker.model.dto.Restaurant
 
 class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewHolder>(RestaurantsDiffCallback()) {
 
-    private lateinit var binding: ItemRestaurantBinding
     var onClickFavoriteCallback: (Int) -> Unit = { }
-    var sortEnum = SortRestaurantEnum.BEST_MATCH
+    private lateinit var binding: ItemRestaurantBinding
+    private var sortEnum = SortRestaurantEnum.BEST_MATCH
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         binding = DataBindingUtil.inflate(
@@ -30,6 +30,11 @@ class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewH
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val restaurant = getItem(position)
         (holder as RestaurantViewHolder).bind(restaurant)
+    }
+
+    fun updateSortEnum(enum: SortRestaurantEnum) {
+        sortEnum = enum
+        notifyDataSetChanged()
     }
 
     inner class RestaurantViewHolder(private val binding: ItemRestaurantBinding)

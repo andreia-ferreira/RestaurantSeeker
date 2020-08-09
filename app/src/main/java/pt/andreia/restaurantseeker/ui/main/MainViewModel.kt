@@ -17,12 +17,14 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
-    val selectedFilters = mutableListOf<FilterRestaurantEnum>()
+    private var filterQuery = ""
 
     private val unsortedListRestaurants = repository.restaurantList
     val listRestaurants = MediatorLiveData<List<Restaurant>>().apply {
         addSource(unsortedListRestaurants) {
-            value = sortRestaurantList(it, selectedSort.value)
+            val sortedList = sortRestaurantList(it, selectedSort.value)
+            val filteredList = filterRestaurantList(sortedList, filterQuery)
+            value = filteredList
         }
     }
 
@@ -33,9 +35,24 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     fun updateSort(positionSort: Int) {
-        selectedSort.value = SortRestaurantEnum.findByPosition(positionSort)
+        val sortEnum = SortRestaurantEnum.findByPosition(positionSort)
         unsortedListRestaurants.value?.let {
-            listRestaurants.value = sortRestaurantList(it, selectedSort.value)
+            val sortedList = sortRestaurantList(it, sortEnum)
+            val filteredList = filterRestaurantList(sortedList, filterQuery)
+            listRestaurants.value = filteredList
+            selectedSort.value = sortEnum
+        }
+    }
+
+    fun updateFilter(name: String?) {
+        if (name == null) return
+
+        val sortEnum = selectedSort.value
+        unsortedListRestaurants.value?.let {
+            val filteredList = filterRestaurantList(it, name)
+            val sortedList = sortRestaurantList(filteredList, sortEnum)
+            listRestaurants.value = sortedList
+            filterQuery = name
         }
     }
 
@@ -67,7 +84,21 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
             .then(statusComparator)
             .thenDescending(sortingComparator)
         )
-
         return sortedList
     }
+
+    private fun filterRestaurantList(fullList: List<Restaurant>, name: String): List<Restaurant> {
+        val filteredList = mutableListOf<Restaurant>()
+        if (name.trim().isEmpty()) {
+            filteredList.addAll(fullList)
+        } else {
+            for (restaurant in fullList) {
+                if (restaurant.name?.toLowerCase()?.contains(name.toLowerCase()) == true) {
+                    filteredList.add(restaurant)
+                }
+            }
+        }
+        return filteredList
+    }
+
 }
