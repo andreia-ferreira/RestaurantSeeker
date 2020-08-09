@@ -1,8 +1,6 @@
 package pt.andreia.restaurantseeker.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.MainFragmentBinding
+import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.ui.adapter.RestaurantsRecyclerViewAdapter
 
 class MainFragment : Fragment() {
@@ -26,16 +25,23 @@ class MainFragment : Fragment() {
 
         binding.recyclerViewRestaurants.adapter = adapter
         initObservers()
+        adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
 
         return binding.root
     }
 
     private fun initObservers() {
-        viewModel.listRestaurants.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                adapter.submitList(it)
+        viewModel.listRestaurants.observe(viewLifecycleOwner, Observer {list ->
+            if (list != null) {
+                adapter.submitList(list.map { it.copy() })
             }
         })
+    }
+
+    private fun onClickFavorite(position: Int?) {
+        if (position != null) {
+            viewModel.updateFavorite(position)
+        }
     }
 
     companion object {

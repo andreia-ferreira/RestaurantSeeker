@@ -8,7 +8,7 @@ import pt.andreia.restaurantseeker.model.dto.Restaurant
 interface RestaurantDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveToFavorites(list: List<RestaurantEntity>)
+    suspend fun saveToFavorites(item: RestaurantEntity)
 
     @Query("SELECT * FROM restaurants")
     suspend fun getFavorites(): List<RestaurantEntity>

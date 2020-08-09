@@ -13,7 +13,7 @@ import pt.andreia.restaurantseeker.model.dto.Restaurant
 class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewHolder>(RestaurantsDiffCallback()) {
 
     private lateinit var binding: ItemRestaurantBinding
-    var callback: () -> Unit = {}
+    var onClickFavoriteCallback: (Int) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         binding = DataBindingUtil.inflate(
@@ -34,6 +34,9 @@ class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewH
 
         fun bind(restaurant: Restaurant) {
             binding.restaurant = restaurant
+            binding.imageFavorite.setOnClickListener {
+                onClickFavoriteCallback.invoke(adapterPosition)
+            }
         }
 
     }

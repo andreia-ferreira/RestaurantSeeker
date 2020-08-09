@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import pt.andreia.restaurantseeker.data.RestaurantDatabase
+import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.model.dto.RestaurantResponse
 import pt.andreia.restaurantseeker.utils.FileUtils
@@ -36,16 +37,27 @@ class RestaurantRepository(
         }
     }
 
-    suspend fun refreshFavorites() {
+    private suspend fun refreshFavorites() {
         val fetchedResult: List<String> = database.restaurantDao().getFavorites().map { it.name }
         Log.d(TAG, "Fetched ${fetchedResult.size} favorites")
-        mRestaurantList.value?.let { listAssets ->
-            listAssets.map {
-                if (fetchedResult.contains(it.name)) {
-                    it.isFavorite = true
-                }
-            }
+
+        val newList = mutableListOf<Restaurant>()
+        newList.addAll(mRestaurantList.value ?: emptyList())
+
+        for(restaurant in newList) {
+            restaurant.isFavorite = fetchedResult.contains(restaurant.name)
         }
+        mRestaurantList.value = newList
+    }
+
+    suspend fun saveToFavorites(restaurant: RestaurantEntity) {
+        database.restaurantDao().saveToFavorites(restaurant)
+        refreshFavorites()
+    }
+
+    suspend fun removeFromFavorites(restaurant: RestaurantEntity) {
+        database.restaurantDao().removeFavorite(restaurant)
+        refreshFavorites()
     }
 
     companion object {
