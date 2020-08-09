@@ -2,18 +2,21 @@ package pt.andreia.restaurantseeker.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.Placeholder
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.ItemRestaurantBinding
+import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 
 class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewHolder>(RestaurantsDiffCallback()) {
 
     private lateinit var binding: ItemRestaurantBinding
     var onClickFavoriteCallback: (Int) -> Unit = { }
+    var sortEnum = SortRestaurantEnum.BEST_MATCH
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         binding = DataBindingUtil.inflate(
@@ -37,8 +40,9 @@ class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewH
             binding.imageFavorite.setOnClickListener {
                 onClickFavoriteCallback.invoke(adapterPosition)
             }
+            val placeholderString = binding.root.resources.getString(R.string.item_sorting_score)
+            binding.textViewScore.text = String.format(placeholderString, sortEnum.description, restaurant.sortingValues?.getScoreBySortType(sortEnum))
         }
-
     }
 
 }

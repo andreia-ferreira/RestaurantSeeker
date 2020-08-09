@@ -51,6 +51,13 @@ class MainFragment : Fragment() {
                 adapter.submitList(list.map { it.copy() })
             }
         })
+
+        viewModel.selectedSort.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                adapter.sortEnum = it
+                adapter.notifyDataSetChanged()
+            }
+        })
     }
 
     private fun initListeners() {
@@ -64,7 +71,7 @@ class MainFragment : Fragment() {
     }
 
     fun onClickSort() {
-        var selectOption = viewModel.selectedSort.position
+        var selectOption = viewModel.selectedSort.value?.position ?: 0
         val options = SortRestaurantEnum.values().map { it.description }.toTypedArray()
         MaterialAlertDialogBuilder(mContext)
             .setTitle(R.string.dialog_sort_title)
@@ -80,20 +87,6 @@ class MainFragment : Fragment() {
             .show()
     }
 
-    fun onClickFilter() {
-        val options = FilterRestaurantEnum.values().map { it.description }.toTypedArray()
-        val checkedItems = booleanArrayOf(false)
-        MaterialAlertDialogBuilder(mContext)
-            .setTitle(R.string.button_filter)
-            .setNeutralButton(R.string.dialog_sort_cancel) { dialog, which ->
-                dialog.cancel()
-            }
-            .setPositiveButton(R.string.dialog_sort_apply) { dialog, which ->
-            }
-            .setMultiChoiceItems(options, checkedItems) { dialog, which, checked ->
-            }
-            .show()
-    }
 
     companion object {
         fun newInstance() = MainFragment()

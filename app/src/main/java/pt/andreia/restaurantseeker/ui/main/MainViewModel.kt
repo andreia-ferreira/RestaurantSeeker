@@ -9,7 +9,6 @@ import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
-import java.util.logging.Filter
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
@@ -17,13 +16,13 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
         RestaurantRepository.getInstance(mApplication, RestaurantDatabase.getInstance(mApplication))
     }
 
-    var selectedSort = SortRestaurantEnum.BEST_MATCH
+    var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
     val selectedFilters = mutableListOf<FilterRestaurantEnum>()
 
     private val unsortedListRestaurants = repository.restaurantList
     val listRestaurants = MediatorLiveData<List<Restaurant>>().apply {
         addSource(unsortedListRestaurants) {
-            value = sortRestaurantList(it, selectedSort)
+            value = sortRestaurantList(it, selectedSort.value)
         }
     }
 
@@ -34,9 +33,9 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     fun updateSort(positionSort: Int) {
-        selectedSort = SortRestaurantEnum.findByPosition(positionSort)
+        selectedSort.value = SortRestaurantEnum.findByPosition(positionSort)
         unsortedListRestaurants.value?.let {
-            listRestaurants.value = sortRestaurantList(it, selectedSort)
+            listRestaurants.value = sortRestaurantList(it, selectedSort.value)
         }
     }
 
@@ -55,27 +54,19 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
         }
     }
 
-    private fun sortRestaurantList(unsortedList: List<Restaurant>, selectedSort: SortRestaurantEnum): List<Restaurant> {
+    private fun sortRestaurantList(unsortedList: List<Restaurant>, selectedSort: SortRestaurantEnum?): List<Restaurant> {
+        if (selectedSort == null) return  unsortedList
+
         val sortedList = unsortedList.toMutableList()
         val favoritesComparator = compareBy<Restaurant> { !it.isFavorite }
         val statusComparator = compareBy<Restaurant> { it.status?.priority }
 
-        val sortingComparator = compareBy<Restaurant> {
-            when (selectedSort) {
-                SortRestaurantEnum.BEST_MATCH -> it.sortingValues?.bestMatch
-                SortRestaurantEnum.NEWEST ->  it.sortingValues?.newest
-                SortRestaurantEnum.RATING ->  it.sortingValues?.ratingAverage
-                SortRestaurantEnum.DISTANCE -> it.sortingValues?.distance
-                SortRestaurantEnum.POPULARITY -> it.sortingValues?.popularity
-                SortRestaurantEnum.AVERAGE_PRICE -> it.sortingValues?.averageProductPrice
-                SortRestaurantEnum.DELIVERY_COST -> it.sortingValues?.deliveryCosts
-                SortRestaurantEnum.MINIMUM_COST -> it.sortingValues?.minCost
-            }
-        }
+        val sortingComparator = compareBy<Restaurant> { it.sortingValues?.getScoreBySortType(selectedSort) }
 
         sortedList.sortWith(favoritesComparator
+            .then(statusComparator)
             .thenDescending(sortingComparator)
-            .then(statusComparator))
+        )
 
         return sortedList
     }

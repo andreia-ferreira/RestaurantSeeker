@@ -57,9 +57,9 @@
                     app:layout_constraintStart_toStartOf="@+id/text_view_title" />
 
                 <TextView
+                    android:id="@+id/text_view_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/item_detail_rating(restaurant.sortingValues.ratingAverage)}"
                     android:layout_marginTop="4dp"
                     app:layout_constraintStart_toStartOf="@id/text_view_status"
                     app:layout_constraintTop_toBottomOf="@id/text_view_status"/>
