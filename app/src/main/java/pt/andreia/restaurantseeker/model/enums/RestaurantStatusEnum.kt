@@ -2,11 +2,11 @@ package pt.andreia.restaurantseeker.model.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class RestaurantStatusEnum(val description: String) {
+enum class RestaurantStatusEnum(val description: String, val priority: Int) {
     @SerializedName("open")
-    OPEN("open"),
+    OPEN("open", 1),
     @SerializedName("closed")
-    CLOSED("closed"),
+    CLOSED("closed", 3),
     @SerializedName("order ahead")
-    ORDER_AHEAD("order ahead")
+    ORDER_AHEAD("order ahead", 2)
 }

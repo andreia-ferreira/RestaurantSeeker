@@ -28,7 +28,7 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
 
     private fun sortList(unsortedList: List<Restaurant>): List<Restaurant> {
         val sortedList = unsortedList.toMutableList()
-        sortedList.sortBy { it.status == RestaurantStatusEnum.CLOSED }
+        sortedList.sortBy { it.status?.priority }
 
         when (selectedSort.value) {
             0 -> sortedList.sortBy { !it.isFavorite }
