@@ -47,7 +47,6 @@ class RestaurantRepository(
         for(restaurant in newList) {
             restaurant.isFavorite = fetchedResult.contains(restaurant.name)
         }
-        newList.sortBy { !it.isFavorite }
         mRestaurantList.value = newList
     }
 

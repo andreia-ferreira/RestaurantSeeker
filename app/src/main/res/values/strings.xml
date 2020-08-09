@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RestaurantSeeker</string>
+    <string name="button_sort">Sort</string>
+    <string name="button_filter">Filter</string>
 </resources>
