@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="pt.andreia.restaurantseeker.model.enums.RestaurantStatusEnum"/>
         <variable
             name="restaurant"
-            type="pt.andreia.restaurantseeker.model.Restaurant" />
+            type="pt.andreia.restaurantseeker.model.dto.Restaurant" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -18,6 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/text_view_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{restaurant.name}"
@@ -30,10 +32,19 @@
                 android:id="@+id/button_favorite"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="#D81B1B"
+                android:background="@{restaurant.isFavorite ? @drawable/ic_heart_minus : @drawable/ic_heart_plus}"
                 android:layout_margin="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/button_favorite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
