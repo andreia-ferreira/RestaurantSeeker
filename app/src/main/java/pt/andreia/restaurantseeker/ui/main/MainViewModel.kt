@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import pt.andreia.restaurantseeker.data.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.dto.Restaurant
+import pt.andreia.restaurantseeker.model.enums.RestaurantStatusEnum
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
@@ -27,6 +28,7 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
 
     private fun sortList(unsortedList: List<Restaurant>): List<Restaurant> {
         val sortedList = unsortedList.toMutableList()
+        sortedList.sortBy { it.status == RestaurantStatusEnum.CLOSED }
 
         when (selectedSort.value) {
             0 -> sortedList.sortBy { !it.isFavorite }

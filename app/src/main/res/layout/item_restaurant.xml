@@ -17,7 +17,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:layout_margin="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,11 +28,12 @@
                     android:id="@+id/text_view_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{restaurant.name}"
                     android:layout_margin="8dp"
+                    android:text="@{restaurant.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintEnd_toStartOf="@id/image_favorite"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/image_favorite"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/image_favorite"
@@ -48,8 +49,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:text="@{restaurant.status.description}"
+                    android:textStyle="bold"
+                    android:textColor="@{restaurant.status == RestaurantStatusEnum.CLOSED ? @android:color/holo_red_dark : @android:color/holo_green_dark}"
                     app:layout_constraintTop_toBottomOf="@+id/image_favorite"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/text_view_title"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

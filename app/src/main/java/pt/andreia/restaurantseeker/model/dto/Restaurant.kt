@@ -5,6 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import pt.andreia.restaurantseeker.model.enums.RestaurantStatusEnum
 
 data class Restaurant(
     @Expose
@@ -17,7 +18,7 @@ data class Restaurant(
 
     @Expose
     @SerializedName("status")
-    val status: String? = null,
+    val status: RestaurantStatusEnum? = null,
 
     var isFavorite: Boolean = false
 )
