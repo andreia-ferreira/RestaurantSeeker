@@ -34,9 +34,12 @@ class MainFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
 
         binding.recyclerViewRestaurants.adapter = adapter
+        binding.viewModel = viewModel
+        binding.handler = this
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initObservers()
-        adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
-        binding.buttonSort.setOnClickListener { onClickSort() }
+        initListeners()
 
         return binding.root
     }
@@ -49,14 +52,18 @@ class MainFragment : Fragment() {
         })
     }
 
+    private fun initListeners() {
+        adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
+    }
+
     private fun onClickFavorite(position: Int?) {
         if (position != null) {
             viewModel.updateFavorite(position)
         }
     }
 
-    private fun onClickSort() {
-        val selectOption = viewModel.selectedSort.value ?: 0
+    fun onClickSort() {
+        var selectOption = viewModel.selectedSort.position
         val options = SortRestaurantEnum.values().map { it.description }.toTypedArray()
         MaterialAlertDialogBuilder(mContext)
             .setTitle(R.string.dialog_sort_title)
@@ -64,9 +71,10 @@ class MainFragment : Fragment() {
                 dialog.cancel()
             }
             .setPositiveButton(R.string.dialog_sort_apply) { dialog, which ->
-                dialog.cancel()
+                viewModel.updateSort(selectOption)
             }
             .setSingleChoiceItems(options, selectOption) { dialog, which ->
+                selectOption = which
             }
             .show()
     }

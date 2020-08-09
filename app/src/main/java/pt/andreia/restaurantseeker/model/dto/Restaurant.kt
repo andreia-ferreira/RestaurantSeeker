@@ -18,4 +18,5 @@ data class Restaurant(
     val status: RestaurantStatusEnum? = null,
 
     var isFavorite: Boolean = false
+
 )

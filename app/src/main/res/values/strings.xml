@@ -5,4 +5,5 @@
     <string name="dialog_sort_title">Sort by</string>
     <string name="dialog_sort_cancel">Cancel</string>
     <string name="dialog_sort_apply">Apply</string>
+    <string name="item_detail_rating">Rating: %.1f</string>
 </resources>

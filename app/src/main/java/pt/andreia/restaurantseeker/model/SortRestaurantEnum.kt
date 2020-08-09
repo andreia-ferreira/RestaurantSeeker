@@ -8,5 +8,17 @@ enum class SortRestaurantEnum(val position: Int, val description: String) {
     POPULARITY(4, "Popularity"),
     AVERAGE_PRICE(5, "Average product price"),
     DELIVERY_COST(6, "Delivery costs"),
-    MINIMUM_COST(7, "Minimum cost")
+    MINIMUM_COST(7, "Minimum cost");
+
+    companion object {
+        fun findByPosition(position: Int): SortRestaurantEnum {
+            for (enum in values()) {
+                if (enum.position == position) {
+                    return enum
+                }
+            }
+            return BEST_MATCH
+        }
+    }
+
 }
