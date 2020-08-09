@@ -35,6 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/button_filter"
+            android:onClick="@{() -> handler.onClickFilter()}"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

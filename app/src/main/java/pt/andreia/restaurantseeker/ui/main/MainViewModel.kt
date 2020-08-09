@@ -4,10 +4,12 @@ import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import pt.andreia.restaurantseeker.data.RestaurantDatabase
+import pt.andreia.restaurantseeker.model.FilterRestaurantEnum
 import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
+import java.util.logging.Filter
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
@@ -16,6 +18,7 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     var selectedSort = SortRestaurantEnum.BEST_MATCH
+    val selectedFilters = mutableListOf<FilterRestaurantEnum>()
 
     private val unsortedListRestaurants = repository.restaurantList
     val listRestaurants = MediatorLiveData<List<Restaurant>>().apply {

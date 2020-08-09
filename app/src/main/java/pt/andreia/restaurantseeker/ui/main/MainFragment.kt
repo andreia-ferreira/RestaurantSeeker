@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.MainFragmentBinding
+import pt.andreia.restaurantseeker.model.FilterRestaurantEnum
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.model.dto.SortingValues
@@ -75,6 +76,21 @@ class MainFragment : Fragment() {
             }
             .setSingleChoiceItems(options, selectOption) { dialog, which ->
                 selectOption = which
+            }
+            .show()
+    }
+
+    fun onClickFilter() {
+        val options = FilterRestaurantEnum.values().map { it.description }.toTypedArray()
+        val checkedItems = booleanArrayOf(false)
+        MaterialAlertDialogBuilder(mContext)
+            .setTitle(R.string.button_filter)
+            .setNeutralButton(R.string.dialog_sort_cancel) { dialog, which ->
+                dialog.cancel()
+            }
+            .setPositiveButton(R.string.dialog_sort_apply) { dialog, which ->
+            }
+            .setMultiChoiceItems(options, checkedItems) { dialog, which, checked ->
             }
             .show()
     }
