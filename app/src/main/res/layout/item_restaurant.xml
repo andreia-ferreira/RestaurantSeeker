@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="pt.andreia.restaurantseeker.model.enums.RestaurantStatusEnum"/>
+        <import type="pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum"/>
         <variable
             name="restaurant"
             type="pt.andreia.restaurantseeker.model.dto.Restaurant" />

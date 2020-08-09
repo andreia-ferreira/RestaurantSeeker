@@ -6,7 +6,6 @@ import kotlinx.coroutines.launch
 import pt.andreia.restaurantseeker.data.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.dto.Restaurant
-import pt.andreia.restaurantseeker.model.enums.RestaurantStatusEnum
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
@@ -16,7 +15,9 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     val selectedSort = MutableLiveData(0)
-    val listRestaurants: LiveData<List<Restaurant>> = Transformations.map(repository.restaurantList) {
+
+    val listRestaurants: LiveData<List<Restaurant>> = Transformations.map(
+        repository.restaurantList) {
             list -> sortList(list)
     }
 

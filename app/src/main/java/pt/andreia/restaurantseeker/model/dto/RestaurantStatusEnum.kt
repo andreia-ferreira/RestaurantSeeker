@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.model.enums
+package pt.andreia.restaurantseeker.model.dto
 
 import com.google.gson.annotations.SerializedName
 

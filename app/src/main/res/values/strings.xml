@@ -2,4 +2,7 @@
     <string name="app_name">RestaurantSeeker</string>
     <string name="button_sort">Sort</string>
     <string name="button_filter">Filter</string>
+    <string name="dialog_sort_title">Sort by</string>
+    <string name="dialog_sort_cancel">Cancel</string>
+    <string name="dialog_sort_apply">Apply</string>
 </resources>
