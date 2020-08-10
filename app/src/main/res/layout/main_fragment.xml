@@ -23,7 +23,9 @@
             android:id="@+id/search_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginTop="@dimen/vertical_margins"
+            android:layout_marginStart="@dimen/horizontal_margins"
+            android:layout_marginEnd="@dimen/horizontal_margins"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_sort"/>
@@ -32,23 +34,37 @@
             android:id="@+id/button_sort"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@android:drawable/ic_menu_sort_by_size"
+            android:background="@drawable/ic_sort"
             android:onClick="@{() -> handler.onClickSort()}"
-            android:layout_margin="8dp"
+            android:layout_marginStart="@dimen/horizontal_margins"
+            android:layout_marginEnd="@dimen/horizontal_margins"
             app:layout_constraintTop_toTopOf="@id/search_view"
             app:layout_constraintBottom_toBottomOf="@id/search_view"
             app:layout_constraintStart_toEndOf="@id/search_view"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <TextView
+            android:id="@+id/text_view_sort_indicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_fragment_sort_indicative(viewModel.selectedSort.description)}"
+            android:layout_marginTop="@dimen/vertical_margins"
+            android:layout_marginStart="@dimen/horizontal_margins"
+            android:layout_marginEnd="@dimen/horizontal_margins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_restaurants"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/vertical_margins"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_sort" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_sort_indicator" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

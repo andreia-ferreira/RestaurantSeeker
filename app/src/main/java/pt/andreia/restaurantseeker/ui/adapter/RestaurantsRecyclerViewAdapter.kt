@@ -46,7 +46,7 @@ class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewH
                 onClickFavoriteCallback.invoke(adapterPosition)
             }
             val placeholderString = binding.root.resources.getString(R.string.item_sorting_score)
-            binding.textViewScore.text = String.format(placeholderString, sortEnum.description, restaurant.sortingValues?.getScoreBySortType(sortEnum))
+            binding.textViewScore.text = String.format(placeholderString, restaurant.sortingValues?.getScoreBySortType(sortEnum))
         }
     }
 

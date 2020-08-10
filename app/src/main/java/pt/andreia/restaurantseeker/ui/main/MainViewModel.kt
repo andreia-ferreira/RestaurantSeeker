@@ -9,6 +9,8 @@ import pt.andreia.restaurantseeker.model.RestaurantEntity
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
+import pt.andreia.restaurantseeker.utils.RestaurantUtils.filterByName
+import pt.andreia.restaurantseeker.utils.RestaurantUtils.sortWithEnum
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
@@ -17,14 +19,14 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     }
 
     var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
-    private var filterQuery = ""
+    private var filterQuery = MutableLiveData("")
 
     private val unsortedListRestaurants = repository.restaurantList
     val listRestaurants = MediatorLiveData<List<Restaurant>>().apply {
         addSource(unsortedListRestaurants) {
-            val sortedList = sortRestaurantList(it, selectedSort.value)
-            val filteredList = filterRestaurantList(sortedList, filterQuery)
-            value = filteredList
+            //val sortedList = sortRestaurantList(it, selectedSort.value)
+            //val filteredList = filterRestaurantList(sortedList, filterQuery)
+            value = it.sortWithEnum(selectedSort.value).filterByName(filterQuery.value)
         }
     }
 
@@ -37,9 +39,9 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     fun updateSort(positionSort: Int) {
         val sortEnum = SortRestaurantEnum.findByPosition(positionSort)
         unsortedListRestaurants.value?.let {
-            val sortedList = sortRestaurantList(it, sortEnum)
-            val filteredList = filterRestaurantList(sortedList, filterQuery)
-            listRestaurants.value = filteredList
+            //val sortedList = sortRestaurantList(it, sortEnum)
+            //val filteredList = filterRestaurantList(sortedList, filterQuery)
+            listRestaurants.value = it.sortWithEnum(sortEnum).filterByName(filterQuery.value)
             selectedSort.value = sortEnum
         }
     }
@@ -47,12 +49,11 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     fun updateFilter(name: String?) {
         if (name == null) return
 
-        val sortEnum = selectedSort.value
         unsortedListRestaurants.value?.let {
-            val filteredList = filterRestaurantList(it, name)
-            val sortedList = sortRestaurantList(filteredList, sortEnum)
-            listRestaurants.value = sortedList
-            filterQuery = name
+            //val filteredList = filterRestaurantList(it, name)
+            //val sortedList = sortRestaurantList(filteredList, sortEnum)
+            listRestaurants.value = it.filterByName(name).sortWithEnum(selectedSort.value)
+            filterQuery.value = name
         }
     }
 
