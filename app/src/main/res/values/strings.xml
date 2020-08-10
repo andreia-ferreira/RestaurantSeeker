@@ -5,4 +5,6 @@
     <string name="dialog_sort_cancel">Cancel</string>
     <string name="dialog_sort_apply">Apply</string>
     <string name="item_sorting_score">Score: %.1f</string>
+    <string name="error_load_restaurants">There was an error while loading the restaurants</string>
+    <string name="error_empty_restaurants">No restaurants found</string>
 </resources>

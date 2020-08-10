@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,6 +57,12 @@ class MainFragment : Fragment() {
         viewModel.selectedSort.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 adapter.updateSortEnum(it)
+            }
+        })
+
+        viewModel.errorsLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
             }
         })
     }

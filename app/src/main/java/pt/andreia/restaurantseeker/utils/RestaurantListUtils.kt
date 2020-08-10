@@ -3,7 +3,7 @@ package pt.andreia.restaurantseeker.utils
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 
-object RestaurantUtils {
+object RestaurantListUtils {
 
     fun List<Restaurant>.sortWithEnum(selectedSort: SortRestaurantEnum?): List<Restaurant> {
         if (selectedSort == null) return emptyList()
@@ -12,7 +12,17 @@ object RestaurantUtils {
         val favoritesComparator = compareBy<Restaurant> { !it.isFavorite }
         val statusComparator = compareBy<Restaurant> { it.status?.priority }
 
-        val sortingComparator = compareBy<Restaurant> { it.sortingValues?.getScoreBySortType(selectedSort) }
+        val sortingComparator: Comparator<Restaurant> = when(selectedSort) {
+            SortRestaurantEnum.BEST_MATCH -> compareByDescending { it.sortingValues?.bestMatch }
+            SortRestaurantEnum.POPULARITY -> compareByDescending { it.sortingValues?.popularity }
+            SortRestaurantEnum.AVERAGE_PRICE -> compareBy { it.sortingValues?.averageProductPrice }
+            SortRestaurantEnum.DELIVERY_COST -> compareBy { it.sortingValues?.deliveryCosts }
+            SortRestaurantEnum.DISTANCE -> compareBy { it.sortingValues?.distance }
+            SortRestaurantEnum.MINIMUM_COST -> compareBy { it.sortingValues?.minCost }
+            SortRestaurantEnum.RATING -> compareByDescending { it.sortingValues?.ratingAverage }
+            SortRestaurantEnum.NEWEST -> compareBy { it.sortingValues?.newest }
+        }
+
 
         sortedList.sortWith(favoritesComparator
             .then(statusComparator)
@@ -36,5 +46,10 @@ object RestaurantUtils {
         }
         return filteredList
     }
+
+    fun List<Restaurant>.updateFavorites(nameFavorites: List<String>) = this.map {
+        it.isFavorite = nameFavorites.contains(it.name)
+    }
+
 
 }
