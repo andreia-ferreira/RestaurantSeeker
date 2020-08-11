@@ -4,22 +4,18 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import pt.andreia.restaurantseeker.R
-import pt.andreia.restaurantseeker.data.RestaurantDataSource
+import pt.andreia.restaurantseeker.data.RestaurantAssetsManager
 import pt.andreia.restaurantseeker.database.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
-import pt.andreia.restaurantseeker.model.dto.RestaurantResponse
-import pt.andreia.restaurantseeker.utils.FileUtils
 import pt.andreia.restaurantseeker.utils.RestaurantListUtils.updateFavorites
 import pt.andreia.restaurantseeker.utils.RestaurantMapper
 
 class RestaurantRepository(
     private val mApplication: Application,
     private val database: RestaurantDatabase,
-    private val dataSource: RestaurantDataSource) {
+    private val assetsManager: RestaurantAssetsManager) {
 
     private val mRestaurantList = MutableLiveData<List<Restaurant>>()
     val restaurantList: LiveData<List<Restaurant>> = mRestaurantList
@@ -28,7 +24,7 @@ class RestaurantRepository(
     val errors = mErrors
 
     suspend fun setupRestaurantData() {
-        val assetsList = dataSource.getRestaurantsData()
+        val assetsList = assetsManager.getRestaurantsData()
         Log.d(TAG, "Fetched ${assetsList.size} restaurants")
 
         if (assetsList.isNotEmpty()) {
@@ -88,9 +84,9 @@ class RestaurantRepository(
         @Volatile
         private var instance: RestaurantRepository? = null
 
-        fun getInstance(application: Application, database: RestaurantDatabase, dataSource: RestaurantDataSource): RestaurantRepository {
+        fun getInstance(application: Application, database: RestaurantDatabase, assetsManager: RestaurantAssetsManager): RestaurantRepository {
             return instance ?: synchronized(this) {
-                instance ?: RestaurantRepository(application, database, dataSource).also { instance = it }
+                instance ?: RestaurantRepository(application, database, assetsManager).also { instance = it }
             }
         }
 

@@ -7,7 +7,7 @@ import pt.andreia.restaurantseeker.model.dto.RestaurantResponse
 import pt.andreia.restaurantseeker.model.dto.RestaurantResult
 import pt.andreia.restaurantseeker.utils.FileUtils
 
-class RestaurantDataSource(private val mApplication: Application) {
+class RestaurantAssetsManager(private val mApplication: Application) {
 
     fun getRestaurantsData(): List<RestaurantResult> {
         val jsonData = FileUtils.getJsonDataFromAsset(mApplication, RESTAURANTS_FILE)

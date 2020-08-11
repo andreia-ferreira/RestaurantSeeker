@@ -3,7 +3,7 @@ package pt.andreia.restaurantseeker.ui.main
 import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import pt.andreia.restaurantseeker.data.RestaurantDataSource
+import pt.andreia.restaurantseeker.data.RestaurantAssetsManager
 import pt.andreia.restaurantseeker.database.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
@@ -15,7 +15,7 @@ import pt.andreia.restaurantseeker.utils.RestaurantListUtils.sortWithEnum
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
     private val repository by lazy {
-        RestaurantRepository.getInstance(mApplication, RestaurantDatabase.getInstance(mApplication), RestaurantDataSource(mApplication))
+        RestaurantRepository.getInstance(mApplication, RestaurantDatabase.getInstance(mApplication), RestaurantAssetsManager(mApplication))
     }
 
     var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
@@ -39,8 +39,8 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
     fun updateSort(positionSort: Int) {
         val sortEnum = SortRestaurantEnum.findByPosition(positionSort)
         unsortedListRestaurants.value?.let {
-            listRestaurants.value = it.sortWithEnum(sortEnum).filterByName(filterQuery.value)
-            selectedSort.value = sortEnum
+            listRestaurants.postValue(it.sortWithEnum(sortEnum).filterByName(filterQuery.value))
+            selectedSort.postValue(sortEnum)
         }
     }
 
@@ -48,8 +48,8 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
         if (name == null) return
 
         unsortedListRestaurants.value?.let {
-            listRestaurants.value = it.filterByName(name).sortWithEnum(selectedSort.value)
-            filterQuery.value = name
+            listRestaurants.postValue(it.filterByName(name).sortWithEnum(selectedSort.value))
+            filterQuery.postValue(name)
         }
     }
 
