@@ -1,7 +1,7 @@
 package pt.andreia.restaurantseeker.utils
 
+import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.model.dto.Restaurant
 
 object RestaurantListUtils {
 
@@ -10,24 +10,24 @@ object RestaurantListUtils {
 
         val sortedList = this.toMutableList()
         val favoritesComparator = compareBy<Restaurant> { !it.isFavorite }
-        val statusComparator = compareBy<Restaurant> { it.status?.priority }
+        val statusComparator = compareBy<Restaurant> { it.status.priority }
 
         val sortingComparator: Comparator<Restaurant> = when(selectedSort) {
-            SortRestaurantEnum.BEST_MATCH -> compareByDescending { it.sortingValues?.bestMatch }
-            SortRestaurantEnum.POPULARITY -> compareByDescending { it.sortingValues?.popularity }
-            SortRestaurantEnum.AVERAGE_PRICE -> compareBy { it.sortingValues?.averageProductPrice }
-            SortRestaurantEnum.DELIVERY_COST -> compareBy { it.sortingValues?.deliveryCosts }
-            SortRestaurantEnum.DISTANCE -> compareBy { it.sortingValues?.distance }
-            SortRestaurantEnum.MINIMUM_COST -> compareBy { it.sortingValues?.minCost }
-            SortRestaurantEnum.RATING -> compareByDescending { it.sortingValues?.ratingAverage }
-            SortRestaurantEnum.NEWEST -> compareBy { it.sortingValues?.newest }
+            SortRestaurantEnum.BEST_MATCH -> compareByDescending { it.sortingValues.bestMatch }
+            SortRestaurantEnum.POPULARITY -> compareByDescending { it.sortingValues.popularity }
+            SortRestaurantEnum.AVERAGE_PRICE -> compareBy { it.sortingValues.averageProductPrice }
+            SortRestaurantEnum.DELIVERY_COST -> compareBy { it.sortingValues.deliveryCosts }
+            SortRestaurantEnum.DISTANCE -> compareBy { it.sortingValues.distance }
+            SortRestaurantEnum.MINIMUM_COST -> compareBy { it.sortingValues.minCost }
+            SortRestaurantEnum.RATING -> compareByDescending { it.sortingValues.ratingAverage }
+            SortRestaurantEnum.NEWEST -> compareBy { it.sortingValues.newest }
         }
-
 
         sortedList.sortWith(favoritesComparator
             .then(statusComparator)
             .then(sortingComparator)
         )
+
         return sortedList
     }
 
@@ -39,7 +39,7 @@ object RestaurantListUtils {
             filteredList.addAll(this)
         } else {
             for (restaurant in this) {
-                if (restaurant.name?.toLowerCase()?.contains(name.toLowerCase()) == true) {
+                if (restaurant.name.toLowerCase().contains(name.toLowerCase())) {
                     filteredList.add(restaurant)
                 }
             }

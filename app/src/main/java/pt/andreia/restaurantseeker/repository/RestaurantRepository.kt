@@ -7,16 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import pt.andreia.restaurantseeker.R
-import pt.andreia.restaurantseeker.data.RestaurantDatabase
-import pt.andreia.restaurantseeker.model.RestaurantEntity
-import pt.andreia.restaurantseeker.model.dto.Restaurant
+import pt.andreia.restaurantseeker.data.RestaurantDataSource
+import pt.andreia.restaurantseeker.database.RestaurantDatabase
+import pt.andreia.restaurantseeker.model.Restaurant
+import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
 import pt.andreia.restaurantseeker.model.dto.RestaurantResponse
 import pt.andreia.restaurantseeker.utils.FileUtils
 import pt.andreia.restaurantseeker.utils.RestaurantListUtils.updateFavorites
+import pt.andreia.restaurantseeker.utils.RestaurantMapper
 
 class RestaurantRepository(
     private val mApplication: Application,
-    private val database: RestaurantDatabase) {
+    private val database: RestaurantDatabase,
+    private val dataSource: RestaurantDataSource) {
 
     private val mRestaurantList = MutableLiveData<List<Restaurant>>()
     val restaurantList: LiveData<List<Restaurant>> = mRestaurantList
@@ -25,22 +28,15 @@ class RestaurantRepository(
     val errors = mErrors
 
     suspend fun setupRestaurantData() {
-        val jsonData = FileUtils.getJsonDataFromAsset(mApplication, RESTAURANTS_FILE)
+        val assetsList = dataSource.getRestaurantsData()
+        Log.d(TAG, "Fetched ${assetsList.size} restaurants")
 
-        if (jsonData != null) {
+        if (assetsList.isNotEmpty()) {
             try {
-                val gson = Gson()
-                val typeResponse = object : TypeToken<RestaurantResponse>() {}.type
-                val restaurantResponse: RestaurantResponse = gson.fromJson(jsonData, typeResponse)
-
-                restaurantResponse.restaurants?.let { assetsList ->
-                    Log.d(TAG, "Fetched ${assetsList.size} restaurants")
-
-                    val favoriteNames = getFavorites()
-                    assetsList.updateFavorites(favoriteNames)
-
-                    mRestaurantList.value = assetsList
-                }
+                val mappedList = assetsList.map { RestaurantMapper.mapRestaurantResult(it) }
+                val favoriteNames = getFavorites()
+                mappedList.updateFavorites(favoriteNames)
+                mRestaurantList.value = mappedList
 
             } catch (e: Exception) {
                 mErrors.value = mApplication.resources.getString(R.string.error_load_restaurants)
@@ -76,26 +72,25 @@ class RestaurantRepository(
         }
     }
 
-    suspend fun saveToFavorites(restaurant: RestaurantEntity) {
+    suspend fun saveToFavorites(restaurant: FavoriteRestaurantEntity) {
         database.restaurantDao().saveToFavorites(restaurant)
         refreshRestaurantList()
     }
 
-    suspend fun removeFromFavorites(restaurant: RestaurantEntity) {
+    suspend fun removeFromFavorites(restaurant: FavoriteRestaurantEntity) {
         database.restaurantDao().removeFavorite(restaurant)
         refreshRestaurantList()
     }
 
     companion object {
         private val TAG = RestaurantRepository::class.java.simpleName
-        private const val RESTAURANTS_FILE = "restaurantList.json"
 
         @Volatile
         private var instance: RestaurantRepository? = null
 
-        fun getInstance(application: Application, database: RestaurantDatabase): RestaurantRepository {
+        fun getInstance(application: Application, database: RestaurantDatabase, dataSource: RestaurantDataSource): RestaurantRepository {
             return instance ?: synchronized(this) {
-                instance ?: RestaurantRepository(application, database).also { instance = it }
+                instance ?: RestaurantRepository(application, database, dataSource).also { instance = it }
             }
         }
 

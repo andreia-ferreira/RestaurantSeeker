@@ -1,14 +1,13 @@
-package pt.andreia.restaurantseeker.data
+package pt.andreia.restaurantseeker.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pt.andreia.restaurantseeker.model.RestaurantEntity
-import pt.andreia.restaurantseeker.model.dto.Restaurant
+import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
 
 @Database(
-    entities = [RestaurantEntity::class],
+    entities = [FavoriteRestaurantEntity::class],
     version = 1,
     exportSchema = false)
 abstract class RestaurantDatabase: RoomDatabase() {

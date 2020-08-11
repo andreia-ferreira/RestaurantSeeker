@@ -4,9 +4,6 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.model.dto.Restaurant
-import pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum
-import pt.andreia.restaurantseeker.model.dto.SortingValues
 import pt.andreia.restaurantseeker.utils.RestaurantListUtils.sortWithEnum
 
 /**

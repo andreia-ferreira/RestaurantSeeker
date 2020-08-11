@@ -7,7 +7,7 @@
         <import type="pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum"/>
         <variable
             name="restaurant"
-            type="pt.andreia.restaurantseeker.model.dto.Restaurant" />
+            type="pt.andreia.restaurantseeker.model.Restaurant" />
     </data>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

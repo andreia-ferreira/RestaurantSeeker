@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.ItemRestaurantBinding
+import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.model.dto.Restaurant
 
 class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewHolder>(RestaurantsDiffCallback()) {
 

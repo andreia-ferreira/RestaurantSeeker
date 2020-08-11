@@ -14,10 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.MainFragmentBinding
-import pt.andreia.restaurantseeker.model.FilterRestaurantEnum
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.model.dto.Restaurant
-import pt.andreia.restaurantseeker.model.dto.SortingValues
 import pt.andreia.restaurantseeker.ui.adapter.RestaurantsRecyclerViewAdapter
 
 class MainFragment : Fragment() {

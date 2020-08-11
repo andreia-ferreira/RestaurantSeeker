@@ -4,18 +4,16 @@ package pt.andreia.restaurantseeker.model.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Restaurant(
+data class RestaurantResult(
     @Expose
     @SerializedName("name")
     val name: String? = null,
 
     @Expose
     @SerializedName("sortingValues")
-    val sortingValues: SortingValues? = null,
+    val sortingValues: SortingValuesResult? = null,
 
     @Expose
     @SerializedName("status")
-    val status: RestaurantStatusEnum? = null,
-
-    var isFavorite: Boolean = false
+    val status: RestaurantStatusEnum? = null
 )

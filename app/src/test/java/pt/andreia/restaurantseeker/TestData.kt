@@ -2,9 +2,9 @@ package pt.andreia.restaurantseeker
 
 import pt.andreia.restaurantseeker.model.dto.Restaurant
 import pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum
-import pt.andreia.restaurantseeker.model.dto.SortingValues
+import pt.andreia.restaurantseeker.model.dto.SortingValuesResult
 
-val restaurantA = Restaurant("A", SortingValues(
+val restaurantA = Restaurant("A", SortingValuesResult(
     averageProductPrice = 1,
     bestMatch = 2.0,
     deliveryCosts = 1,
@@ -16,7 +16,7 @@ val restaurantA = Restaurant("A", SortingValues(
 ), RestaurantStatusEnum.OPEN,false)
 
 
-val restaurantB = Restaurant("B", SortingValues(
+val restaurantB = Restaurant("B", SortingValuesResult(
     averageProductPrice = 1,
     bestMatch = 2.0,
     deliveryCosts = 1,
@@ -27,7 +27,7 @@ val restaurantB = Restaurant("B", SortingValues(
     ratingAverage = 2.0
 ), RestaurantStatusEnum.CLOSED,false)
 
-val restaurantC = Restaurant("C", SortingValues(
+val restaurantC = Restaurant("C", SortingValuesResult(
     averageProductPrice = 1,
     bestMatch = 2.0,
     deliveryCosts = 1,
