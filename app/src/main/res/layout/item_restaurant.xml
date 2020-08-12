@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum"/>
+        <variable
+            name="restaurant"
+            type="pt.andreia.restaurantseeker.model.Restaurant" />
+    </data>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/horizontal_margins">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_view_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@{restaurant.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintEnd_toStartOf="@id/image_favorite"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_favorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@{restaurant.isFavorite ? @drawable/ic_heart_minus : @drawable/ic_heart_plus}"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/description_mark_favorite" />
+
+                <TextView
+                    android:id="@+id/text_view_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{restaurant.status.description}"
+                    android:textStyle="bold"
+                    android:textColor="@{restaurant.status == RestaurantStatusEnum.CLOSED ? @android:color/holo_red_dark : @android:color/holo_green_dark}"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+                    app:layout_constraintStart_toStartOf="@+id/text_view_title" />
+
+                <TextView
+                    android:id="@+id/text_view_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@id/text_view_status"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_status"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+</layout>

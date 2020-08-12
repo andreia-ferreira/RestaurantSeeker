@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">RestaurantSeeker</string>
+    <string name="dialog_sort_title">Sort by</string>
+    <string name="main_fragment_sort_indicative">Sorted by: %s</string>
+    <string name="dialog_sort_cancel">Cancel</string>
+    <string name="dialog_sort_apply">Apply</string>
+    <string name="item_sorting_score">Score: %.1f</string>
+    <string name="error_load_restaurants">There was an error while loading the restaurants</string>
+    <string name="error_empty_restaurants">No restaurants found</string>
+    <string name="description_mark_favorite">Mark as favorite</string>
 </resources>
