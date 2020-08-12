@@ -63,4 +63,6 @@ val restaurantF5 = Restaurant("E", Restaurant.SortingValues(
 val unsortedFavorites = listOf(restaurantF5, restaurantF2, restaurantF3, restaurantF1, restaurantF4)
 
 val sortFavoritesBestMatch = listOf(restaurantF1, restaurantF2, restaurantF4, restaurantF3, restaurantF5)
+val sortFavoritesNewest = listOf(restaurantF2, restaurantF1, restaurantF4, restaurantF3, restaurantF5)
+val sortFavoritesDeliveryCosts = listOf(restaurantF2, restaurantF1, restaurantF3, restaurantF4, restaurantF5)
 
