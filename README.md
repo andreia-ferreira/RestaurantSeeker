@@ -8,3 +8,6 @@ Main libraries used:
 - Data Binding 
 - Room
 - Kotlin Coroutines
+
+### Testing
+The Unit tests and UI tests are in the respective folders ('test' and 'androidTest').
