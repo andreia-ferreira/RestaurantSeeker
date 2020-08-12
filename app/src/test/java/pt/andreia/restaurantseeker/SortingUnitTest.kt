@@ -1,10 +1,9 @@
 package pt.andreia.restaurantseeker
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.utils.RestaurantListUtils.sortWithEnum
+import pt.andreia.restaurantseeker.utils.sortWithEnum
 
 /**
  * Example local unit test, which will execute on the development machine (host).

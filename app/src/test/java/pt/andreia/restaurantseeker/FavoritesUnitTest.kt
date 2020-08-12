@@ -1,16 +1,14 @@
 package pt.andreia.restaurantseeker
 
-import junit.framework.Assert.assertEquals
-import org.junit.Assert
 import org.junit.Test
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.utils.RestaurantListUtils.sortWithEnum
+import pt.andreia.restaurantseeker.utils.sortWithEnum
 
 class FavoritesUnitTest {
     @Test
     fun sortByBestMatch() {
         val sortedList = unsortedFavorites.sortWithEnum(SortRestaurantEnum.BEST_MATCH)
-        assertEquals(sortFavoritesBestMatch, sortedList)
+        assert(sortFavoritesBestMatch == sortedList)
     }
 /*
     @Test

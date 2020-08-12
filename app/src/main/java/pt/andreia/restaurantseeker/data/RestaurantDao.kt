@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.database
+package pt.andreia.restaurantseeker.data
 
 import androidx.room.*
 import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity

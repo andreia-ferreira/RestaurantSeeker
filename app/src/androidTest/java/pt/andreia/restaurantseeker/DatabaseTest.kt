@@ -4,15 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pt.andreia.restaurantseeker.database.RestaurantDao
-import pt.andreia.restaurantseeker.database.RestaurantDatabase
+import pt.andreia.restaurantseeker.data.RestaurantDao
+import pt.andreia.restaurantseeker.data.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
 import java.io.IOException
 
@@ -37,13 +35,26 @@ class DatabaseTest {
 
     @Test
     @Throws(IOException::class)
-    fun addFavorites() = runBlocking {
+    fun addFavorite() = runBlocking {
         val favorite = FavoriteRestaurantEntity("test")
         restaurantDao.saveToFavorites(favorite)
 
         val databaseRestaurant = restaurantDao.getFavorites()
 
-        assertEquals("test", databaseRestaurant[0].name)
+        assert("test" == databaseRestaurant[0].name)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun removeFavorite() = runBlocking {
+        val favorite = FavoriteRestaurantEntity("test")
+        restaurantDao.saveToFavorites(favorite)
+
+        restaurantDao.removeFavorite(favorite)
+
+        val databaseRestaurant = restaurantDao.getFavorites()
+
+        assert(0 == databaseRestaurant.size)
     }
 
 }

@@ -7,7 +7,7 @@ import pt.andreia.restaurantseeker.model.dto.RestaurantResponse
 import pt.andreia.restaurantseeker.model.dto.RestaurantResult
 import pt.andreia.restaurantseeker.utils.FileUtils
 
-class RestaurantAssetsManager(private val mApplication: Application) {
+class RestaurantAssetsManager private constructor(private val mApplication: Application) {
 
     fun getRestaurantsData(): List<RestaurantResult> {
         val jsonData = FileUtils.getJsonDataFromAsset(mApplication, RESTAURANTS_FILE)
@@ -27,6 +27,15 @@ class RestaurantAssetsManager(private val mApplication: Application) {
 
     companion object {
         private const val RESTAURANTS_FILE = "restaurantList.json"
+
+        @Volatile
+        private var instance: RestaurantAssetsManager? = null
+
+        fun getInstance(mApplication: Application): RestaurantAssetsManager {
+            return instance ?: synchronized(this) {
+                    instance ?: RestaurantAssetsManager(mApplication).also { instance = it }
+                }
+        }
     }
 
 }

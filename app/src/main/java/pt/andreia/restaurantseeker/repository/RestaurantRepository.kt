@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.data.RestaurantAssetsManager
-import pt.andreia.restaurantseeker.database.RestaurantDatabase
+import pt.andreia.restaurantseeker.data.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
-import pt.andreia.restaurantseeker.utils.RestaurantListUtils.updateFavorites
 import pt.andreia.restaurantseeker.utils.RestaurantMapper
+import pt.andreia.restaurantseeker.utils.updateFavorites
 
-class RestaurantRepository(
+class RestaurantRepository private constructor(
     private val mApplication: Application,
     private val database: RestaurantDatabase,
     private val assetsManager: RestaurantAssetsManager) {
@@ -24,22 +24,24 @@ class RestaurantRepository(
     val errors = mErrors
 
     suspend fun setupRestaurantData() {
-        val assetsList = assetsManager.getRestaurantsData()
-        Log.d(TAG, "Fetched ${assetsList.size} restaurants")
+        try {
 
-        if (assetsList.isNotEmpty()) {
-            try {
+            val assetsList = assetsManager.getRestaurantsData()
+            Log.d(TAG, "Fetched ${assetsList.size} restaurants")
+
+            if (assetsList.isNotEmpty()) {
                 val mappedList = assetsList.map { RestaurantMapper.mapRestaurantResult(it) }
                 val favoriteNames = getFavorites()
                 mappedList.updateFavorites(favoriteNames)
                 mRestaurantList.value = mappedList
 
-            } catch (e: Exception) {
+            } else {
                 mErrors.value = mApplication.resources.getString(R.string.error_load_restaurants)
-                Log.e(TAG, e.printStackTrace().toString())
             }
-        } else {
+
+        } catch (e: Exception) {
             mErrors.value = mApplication.resources.getString(R.string.error_load_restaurants)
+            Log.e(TAG, e.printStackTrace().toString())
         }
     }
 

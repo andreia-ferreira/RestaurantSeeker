@@ -10,6 +10,7 @@
             type="pt.andreia.restaurantseeker.model.Restaurant" />
     </data>
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_restaurant"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="@dimen/horizontal_margins">
@@ -38,7 +39,8 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/description_mark_favorite" />
 
                 <TextView
                     android:id="@+id/text_view_status"

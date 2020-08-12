@@ -1,26 +1,29 @@
 package pt.andreia.restaurantseeker.ui.main
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pt.andreia.restaurantseeker.data.RestaurantAssetsManager
-import pt.andreia.restaurantseeker.database.RestaurantDatabase
+import pt.andreia.restaurantseeker.data.RestaurantDatabase
 import pt.andreia.restaurantseeker.model.Restaurant
 import pt.andreia.restaurantseeker.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
 import pt.andreia.restaurantseeker.repository.RestaurantRepository
-import pt.andreia.restaurantseeker.utils.RestaurantListUtils.filterByName
-import pt.andreia.restaurantseeker.utils.RestaurantListUtils.sortWithEnum
+import pt.andreia.restaurantseeker.utils.filterByName
+import pt.andreia.restaurantseeker.utils.sortWithEnum
 
 class MainViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
     private val repository by lazy {
-        RestaurantRepository.getInstance(mApplication, RestaurantDatabase.getInstance(mApplication), RestaurantAssetsManager(mApplication))
+        RestaurantRepository.getInstance(mApplication,
+            RestaurantDatabase.getInstance(mApplication),
+            RestaurantAssetsManager.getInstance(mApplication))
     }
 
-    var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
-    private var filterQuery = MutableLiveData("")
-
+    val errorsLiveData = repository.errors
     private val unsortedListRestaurants = repository.restaurantList
     val listRestaurants = MediatorLiveData<List<Restaurant>>().apply {
         addSource(unsortedListRestaurants) {
@@ -28,7 +31,8 @@ class MainViewModel(private val mApplication: Application) : AndroidViewModel(mA
         }
     }
 
-    val errorsLiveData = repository.errors
+    var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
+    private var filterQuery = MutableLiveData("")
 
     init {
         viewModelScope.launch {
