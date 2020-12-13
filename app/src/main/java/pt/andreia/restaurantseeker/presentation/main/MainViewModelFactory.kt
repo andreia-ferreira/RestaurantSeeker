@@ -2,8 +2,6 @@ package pt.andreia.restaurantseeker.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pt.andreia.restaurantseeker.data.repository.FavoriteRepository
-import pt.andreia.restaurantseeker.data.repository.RestaurantRepository
 import pt.andreia.restaurantseeker.useCases.Interactors
 
 class MainViewModelFactory(
@@ -11,7 +9,7 @@ class MainViewModelFactory(
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(interactors) as T
+        return modelClass.getConstructor(Interactors::class.java).newInstance(interactors)
     }
 
 }

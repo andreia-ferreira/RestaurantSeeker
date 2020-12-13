@@ -2,15 +2,14 @@ package pt.andreia.restaurantseeker.presentation.main
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import pt.andreia.restaurantseeker.AppContainer
 import pt.andreia.restaurantseeker.R
@@ -35,7 +34,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appContainer = (activity?.application as RestaurantApplication).appContainer
-        viewModel = appContainer.mainViewModelFactory.create(MainViewModel::class.java)
+        viewModel = appContainer.mainViewModel
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +66,7 @@ class MainFragment : Fragment() {
             }
         })
 
-        viewModel.error.observe(viewLifecycleOwner, Observer {
+        viewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
             }

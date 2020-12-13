@@ -1,23 +1,20 @@
 package pt.andreia.restaurantseeker.presentation.main
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.andreia.restaurantseeker.framework.RestaurantLocalAssets
-import pt.andreia.restaurantseeker.framework.FavoritesDatabase
 import pt.andreia.restaurantseeker.domain.model.Restaurant
 import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
-import pt.andreia.restaurantseeker.data.repository.FavoriteRepository
-import pt.andreia.restaurantseeker.data.repository.RestaurantRepository
 import pt.andreia.restaurantseeker.useCases.Interactors
 import pt.andreia.restaurantseeker.utils.filterByName
 import pt.andreia.restaurantseeker.utils.sortWithEnum
 import pt.andreia.restaurantseeker.utils.updateFavorites
-import java.lang.Exception
 
 class MainViewModel(private val interactors: Interactors): ViewModel() {
 
@@ -28,7 +25,8 @@ class MainViewModel(private val interactors: Interactors): ViewModel() {
         }
     }
 
-    val error = MutableLiveData<String>()
+    private val error = MutableLiveData<String>()
+    val errorLiveData = error
 
     var selectedSort = MutableLiveData(SortRestaurantEnum.BEST_MATCH)
     private var filterQuery = MutableLiveData("")
