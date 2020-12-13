@@ -1,42 +1,42 @@
-package pt.andreia.restaurantseeker.data
+package pt.andreia.restaurantseeker.framework
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.FavoritesDataSource
+import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
 
 @Database(
     entities = [FavoriteRestaurantEntity::class],
     version = 1,
     exportSchema = false)
-abstract class RestaurantDatabase: RoomDatabase() {
+abstract class FavoritesDatabase: RoomDatabase() {
 
-    abstract fun restaurantDao(): RestaurantDao
+    abstract fun favoritesDao(): FavoritesDao
 
     companion object {
-        private val TAG = RestaurantDatabase::class.java.simpleName
+        private val TAG = FavoritesDatabase::class.java.simpleName
 
         @Volatile
-        private var instance: RestaurantDatabase? = null
+        private var instance: FavoritesDatabase? = null
 
-        fun getInstance(context: Context): RestaurantDatabase {
+        fun getInstance(context: Context): FavoritesDatabase {
             return instance
                 ?: synchronized(this) {
                 buildDatabase(context).also { instance = it }
             }
         }
 
-        private fun buildDatabase(context: Context): RestaurantDatabase {
+        private fun buildDatabase(context: Context): FavoritesDatabase {
             synchronized(this) {
                 return instance
                     ?: Room.databaseBuilder(
                     context.applicationContext,
-                    RestaurantDatabase::class.java,
+                    FavoritesDatabase::class.java,
                     "restaurantDatabase.db")
                     .build()
             }
         }
     }
-
 }

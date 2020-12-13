@@ -1,7 +1,7 @@
 package pt.andreia.restaurantseeker.utils
 
-import pt.andreia.restaurantseeker.model.Restaurant
-import pt.andreia.restaurantseeker.model.SortRestaurantEnum
+import pt.andreia.restaurantseeker.domain.model.Restaurant
+import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
 
 fun List<Restaurant>.sortWithEnum(selectedSort: SortRestaurantEnum?): List<Restaurant> {
     if (selectedSort == null) return emptyList()

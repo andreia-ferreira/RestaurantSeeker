@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.model.dto
+package pt.andreia.restaurantseeker.domain.model.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

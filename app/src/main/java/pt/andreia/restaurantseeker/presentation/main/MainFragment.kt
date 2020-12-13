@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.ui.main
+package pt.andreia.restaurantseeker.presentation.main
 
 import android.content.Context
 import android.os.Bundle
@@ -12,25 +12,35 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import pt.andreia.restaurantseeker.AppContainer
 import pt.andreia.restaurantseeker.R
+import pt.andreia.restaurantseeker.RestaurantApplication
 import pt.andreia.restaurantseeker.databinding.MainFragmentBinding
-import pt.andreia.restaurantseeker.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.ui.adapter.RestaurantsRecyclerViewAdapter
+import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
+import pt.andreia.restaurantseeker.presentation.adapter.RestaurantsRecyclerViewAdapter
 
 class MainFragment : Fragment() {
 
-    private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val adapter: RestaurantsRecyclerViewAdapter by lazy { RestaurantsRecyclerViewAdapter() }
     private lateinit var binding: MainFragmentBinding
     private lateinit var mContext: Context
+    private lateinit var appContainer: AppContainer
+    private lateinit var viewModel: MainViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        appContainer = (activity?.application as RestaurantApplication).appContainer
+        viewModel = appContainer.mainViewModelFactory.create(MainViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
 
         binding.recyclerViewRestaurants.adapter = adapter
@@ -57,7 +67,7 @@ class MainFragment : Fragment() {
             }
         })
 
-        viewModel.errorsLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.error.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
             }

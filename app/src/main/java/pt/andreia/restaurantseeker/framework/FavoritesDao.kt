@@ -1,10 +1,10 @@
-package pt.andreia.restaurantseeker.data
+package pt.andreia.restaurantseeker.framework
 
 import androidx.room.*
-import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
 
 @Dao
-interface RestaurantDao {
+interface FavoritesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveToFavorites(item: FavoriteRestaurantEntity)

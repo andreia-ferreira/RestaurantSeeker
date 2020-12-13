@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.ui.adapter
+package pt.andreia.restaurantseeker.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.databinding.ItemRestaurantBinding
-import pt.andreia.restaurantseeker.model.Restaurant
-import pt.andreia.restaurantseeker.model.SortRestaurantEnum
+import pt.andreia.restaurantseeker.domain.model.Restaurant
+import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
 
 class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewHolder>(RestaurantsDiffCallback()) {
 

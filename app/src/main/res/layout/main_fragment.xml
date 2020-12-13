@@ -8,17 +8,17 @@
         <import type="android.view.View"/>
         <variable
             name="handler"
-            type="pt.andreia.restaurantseeker.ui.main.MainFragment" />
+            type="pt.andreia.restaurantseeker.presentation.main.MainFragment" />
         <variable
             name="viewModel"
-            type="pt.andreia.restaurantseeker.ui.main.MainViewModel" />
+            type="pt.andreia.restaurantseeker.presentation.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainFragment">
+        tools:context=".presentation.main.MainFragment">
 
         <SearchView
             android:id="@+id/search_view"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{viewModel.errorsLiveData != null ? View.VISIBLE : View.GONE, default=gone}"/>
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE, default=gone}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,3 +11,11 @@ Main libraries used:
 
 ### Testing
 The Unit tests and UI tests are in the respective folders ('test' and 'androidTest').
+
+
+## Under construction
+Refactoring ongoing:
+- Migration to clean architecture
+
+Refactoring done:
+- Remove database from repository(data layer should not know about framewoek classes)

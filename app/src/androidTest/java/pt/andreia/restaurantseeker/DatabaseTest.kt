@@ -9,22 +9,22 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import pt.andreia.restaurantseeker.data.RestaurantDao
-import pt.andreia.restaurantseeker.data.RestaurantDatabase
-import pt.andreia.restaurantseeker.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.framework.FavoritesDao
+import pt.andreia.restaurantseeker.framework.FavoritesDatabase
+import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest {
 
-    private lateinit var restaurantDao: RestaurantDao
-    private lateinit var database: RestaurantDatabase
+    private lateinit var restaurantDao: FavoritesDao
+    private lateinit var database: FavoritesDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, RestaurantDatabase::class.java).build()
-        restaurantDao = database.restaurantDao()
+        database = Room.inMemoryDatabaseBuilder(context, FavoritesDatabase::class.java).build()
+        restaurantDao = database.favoritesDao()
     }
 
     @After

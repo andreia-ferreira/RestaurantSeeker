@@ -1,4 +1,4 @@
-package pt.andreia.restaurantseeker.model
+package pt.andreia.restaurantseeker.domain.model
 
 enum class SortRestaurantEnum(val position: Int, val description: String) {
     BEST_MATCH(0, "Best match"),

@@ -2,7 +2,7 @@ package pt.andreia.restaurantseeker
 
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
-import pt.andreia.restaurantseeker.model.SortRestaurantEnum
+import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
 import pt.andreia.restaurantseeker.utils.sortWithEnum
 
 class FavoritesUnitTest {

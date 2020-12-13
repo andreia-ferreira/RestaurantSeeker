@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="pt.andreia.restaurantseeker.model.dto.RestaurantStatusEnum"/>
+        <import type="pt.andreia.restaurantseeker.domain.model.dto.RestaurantStatusEnum"/>
         <variable
             name="restaurant"
-            type="pt.andreia.restaurantseeker.model.Restaurant" />
+            type="pt.andreia.restaurantseeker.domain.model.Restaurant" />
     </data>
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_restaurant"
