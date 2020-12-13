@@ -16,7 +16,7 @@ object RestaurantMapper {
         )
     }
 
-    fun mapSortingValues(input: SortingValuesResult?): Restaurant.SortingValues {
+    private fun mapSortingValues(input: SortingValuesResult?): Restaurant.SortingValues {
         return Restaurant.SortingValues(
             averageProductPrice = input?.averageProductPrice ?: 0,
             bestMatch = input?.bestMatch ?: 0.0,
