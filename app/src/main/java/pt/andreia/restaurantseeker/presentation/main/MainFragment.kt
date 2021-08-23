@@ -55,23 +55,31 @@ class MainFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.listRestaurants.observe(viewLifecycleOwner, Observer {list ->
+        viewModel.listRestaurants.observe(viewLifecycleOwner, { list ->
             if (list != null) {
                 binding.composeView.setContent {
                     MaterialTheme {
-                        RestaurantList(restaurants = list)
+                        viewModel.selectedSort.value?.let {
+                            RestaurantList(restaurants = list, it)
+                        }
                     }
                 }
             }
         })
 
-        viewModel.selectedSort.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                //adapter.updateSortEnum(it)
+        viewModel.selectedSort.observe(viewLifecycleOwner, { sort ->
+            if (sort != null) {
+                binding.composeView.setContent {
+                    MaterialTheme {
+                        viewModel.listRestaurants.value?.let {
+                            RestaurantList(restaurants = it, sort)
+                        }
+                    }
+                }
             }
         })
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.errorLiveData.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
             }
