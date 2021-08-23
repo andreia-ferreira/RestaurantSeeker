@@ -1,7 +1,7 @@
 package pt.andreia.restaurantseeker.framework
 
 import androidx.room.*
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 
 @Dao
 interface FavoritesDao {

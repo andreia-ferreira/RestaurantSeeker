@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.compose.material.MaterialTheme
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,11 +17,12 @@ import pt.andreia.restaurantseeker.R
 import pt.andreia.restaurantseeker.RestaurantApplication
 import pt.andreia.restaurantseeker.databinding.MainFragmentBinding
 import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.presentation.adapter.RestaurantsRecyclerViewAdapter
+import pt.andreia.restaurantseeker.ui.RestaurantCard
+import pt.andreia.restaurantseeker.ui.RestaurantList
 
+@Deprecated("Move to activity and create screen in compose")
 class MainFragment : Fragment() {
 
-    private val adapter: RestaurantsRecyclerViewAdapter by lazy { RestaurantsRecyclerViewAdapter() }
     private lateinit var binding: MainFragmentBinding
     private lateinit var mContext: Context
     private lateinit var appContainer: AppContainer
@@ -42,7 +44,6 @@ class MainFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
 
-        binding.recyclerViewRestaurants.adapter = adapter
         binding.viewModel = viewModel
         binding.handler = this
         binding.lifecycleOwner = viewLifecycleOwner
@@ -56,13 +57,17 @@ class MainFragment : Fragment() {
     private fun initObservers() {
         viewModel.listRestaurants.observe(viewLifecycleOwner, Observer {list ->
             if (list != null) {
-                adapter.submitList(list.map { it.copy() })
+                binding.composeView.setContent {
+                    MaterialTheme {
+                        RestaurantList(restaurants = list)
+                    }
+                }
             }
         })
 
         viewModel.selectedSort.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                adapter.updateSortEnum(it)
+                //adapter.updateSortEnum(it)
             }
         })
 
@@ -74,7 +79,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initListeners() {
-        adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
+        //adapter.onClickFavoriteCallback = { position ->  onClickFavorite(position) }
 
         binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

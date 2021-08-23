@@ -1,6 +1,6 @@
 package pt.andreia.restaurantseeker.domain.model
 
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantStatusEnum
+import pt.andreia.restaurantseeker.data.model.RestaurantStatusEnum
 
 data class Restaurant(
     val name: String,

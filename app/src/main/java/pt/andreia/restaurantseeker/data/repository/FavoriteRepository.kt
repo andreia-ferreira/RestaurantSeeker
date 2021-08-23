@@ -1,8 +1,7 @@
 package pt.andreia.restaurantseeker.data.repository
 
 import pt.andreia.restaurantseeker.data.FavoritesDataSource
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantResult
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 
 class FavoriteRepository(private val favoriteDataSource: FavoritesDataSource) {
 

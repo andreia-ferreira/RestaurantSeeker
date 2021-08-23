@@ -40,11 +40,11 @@ class RestaurantsRecyclerViewAdapter: ListAdapter<Restaurant, RecyclerView.ViewH
 
         fun bind(restaurant: Restaurant) {
             binding.restaurant = restaurant
-            binding.imageFavorite.setOnClickListener {
-                onClickFavoriteCallback.invoke(adapterPosition)
-            }
-            val placeholderString = binding.root.resources.getString(R.string.item_sorting_score)
-            binding.textViewScore.text = String.format(placeholderString, restaurant.sortingValues.getScoreBySortType(sortEnum))
+//            binding.imageFavorite.setOnClickListener {
+//                onClickFavoriteCallback.invoke(adapterPosition)
+//            }
+//            val placeholderString = binding.root.resources.getString(R.string.item_sorting_score)
+//            binding.textViewScore.text = String.format(placeholderString, restaurant.sortingValues.getScoreBySortType(sortEnum))
         }
     }
 

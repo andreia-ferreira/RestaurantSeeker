@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import pt.andreia.restaurantseeker.framework.FavoritesDao
 import pt.andreia.restaurantseeker.framework.FavoritesDatabase
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)

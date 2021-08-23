@@ -3,6 +3,7 @@ package pt.andreia.restaurantseeker.utils
 import pt.andreia.restaurantseeker.domain.model.Restaurant
 import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
 
+// TODO move most of the sorting logic to use case
 fun List<Restaurant>.sortWithEnum(selectedSort: SortRestaurantEnum?): List<Restaurant> {
     if (selectedSort == null) return emptyList()
 

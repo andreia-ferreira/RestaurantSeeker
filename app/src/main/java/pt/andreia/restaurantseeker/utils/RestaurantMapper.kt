@@ -1,9 +1,9 @@
 package pt.andreia.restaurantseeker.utils
 
 import pt.andreia.restaurantseeker.domain.model.Restaurant
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantResult
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantStatusEnum
-import pt.andreia.restaurantseeker.domain.model.dto.SortingValuesResult
+import pt.andreia.restaurantseeker.data.model.RestaurantResult
+import pt.andreia.restaurantseeker.data.model.RestaurantStatusEnum
+import pt.andreia.restaurantseeker.data.model.SortingValuesResult
 
 object RestaurantMapper {
 

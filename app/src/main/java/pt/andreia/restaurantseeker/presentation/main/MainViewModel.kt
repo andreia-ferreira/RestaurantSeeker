@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.andreia.restaurantseeker.domain.model.Restaurant
 import pt.andreia.restaurantseeker.domain.model.SortRestaurantEnum
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 import pt.andreia.restaurantseeker.useCases.Interactors
 import pt.andreia.restaurantseeker.utils.filterByName
 import pt.andreia.restaurantseeker.utils.sortWithEnum

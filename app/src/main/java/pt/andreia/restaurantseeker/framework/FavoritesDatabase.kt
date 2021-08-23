@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pt.andreia.restaurantseeker.data.FavoritesDataSource
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 
 @Database(
     entities = [FavoriteRestaurantEntity::class],

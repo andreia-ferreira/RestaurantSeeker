@@ -1,7 +1,7 @@
 package pt.andreia.restaurantseeker
 
 import pt.andreia.restaurantseeker.domain.model.Restaurant
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantStatusEnum
+import pt.andreia.restaurantseeker.data.model.RestaurantStatusEnum
 
 val restaurantA = Restaurant("A", Restaurant.SortingValues(
     averageProductPrice = 1,

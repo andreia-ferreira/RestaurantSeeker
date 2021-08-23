@@ -5,8 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import pt.andreia.restaurantseeker.data.RestaurantsDataSource
 import pt.andreia.restaurantseeker.domain.model.ResultHandler
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantResponse
-import pt.andreia.restaurantseeker.domain.model.dto.RestaurantResult
+import pt.andreia.restaurantseeker.data.model.RestaurantResponse
+import pt.andreia.restaurantseeker.data.model.RestaurantResult
 import pt.andreia.restaurantseeker.utils.FileUtils
 
 class RestaurantLocalAssets(private val context: Context): RestaurantsDataSource {

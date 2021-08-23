@@ -2,7 +2,7 @@ package pt.andreia.restaurantseeker.framework
 
 import android.content.Context
 import pt.andreia.restaurantseeker.data.FavoritesDataSource
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 
 class FavoritesRoomDataSource(context: Context): FavoritesDataSource {
     private val favoritesDao = FavoritesDatabase.getInstance(context).favoritesDao()

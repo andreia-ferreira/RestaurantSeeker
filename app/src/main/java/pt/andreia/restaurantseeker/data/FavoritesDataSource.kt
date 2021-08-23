@@ -1,6 +1,6 @@
 package pt.andreia.restaurantseeker.data
 
-import pt.andreia.restaurantseeker.domain.model.dto.FavoriteRestaurantEntity
+import pt.andreia.restaurantseeker.data.model.FavoriteRestaurantEntity
 
 interface FavoritesDataSource {
     suspend fun fetchFavorites(): List<FavoriteRestaurantEntity>
