@@ -8,7 +8,7 @@ class MainViewModelFactory(
     private val interactors: Interactors
 ): ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(Interactors::class.java).newInstance(interactors)
     }
 

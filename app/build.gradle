@@ -4,15 +4,15 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "30.0.0"
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
 
     defaultConfig {
         applicationId "pt.andreia.restaurantseeker"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion min_sdk_version
+        targetSdkVersion compile_sdk_version
+        versionCode app_version_code
+        versionName app_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,36 +41,36 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    androidTestImplementation 'androidx.test:rules:1.3.0'
+    implementation baseAndroidDependencies.kotlinLib
+    implementation baseAndroidDependencies.ktx
+    implementation baseAndroidDependencies.appCompat
+    implementation baseAndroidDependencies.viewModel
+    implementation baseAndroidDependencies.lifecycleExtensions
+    implementation uiDependencies.material
+    implementation uiDependencies.cardView
+    implementation uiDependencies.recyclerView
+    implementation uiDependencies.material
+    testImplementation unitTesting.junit
+    androidTestImplementation automationTesting.core
+    androidTestImplementation automationTesting.junit
+    androidTestImplementation automationTesting.espresso
+    androidTestImplementation automationTesting.testRules
 
     // retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.gson
+    implementation retrofitDependencies.interceptor
 
     //Kotlin Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation coroutinesDependencies.core
+    implementation coroutinesDependencies.android
 
     //Room database
-    implementation "androidx.room:room-runtime:2.2.5"
-    kapt "androidx.room:room-compiler:2.2.5"
-    testImplementation "androidx.room:room-testing:2.2.5"
+    implementation roomDependencies.runtime
+    kapt roomDependencies.compiler
+    testImplementation roomDependencies.test
 
     //Room + coroutines
-    implementation "androidx.room:room-ktx:2.2.5"
+    implementation roomDependencies.coroutines
 
 }
